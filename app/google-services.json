@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "448557458499",
+    "firebase_url": "https://safecar-bbf43.firebaseio.com",
+    "project_id": "safecar-bbf43",
+    "storage_bucket": "safecar-bbf43.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:448557458499:android:35c940e82f2ccc2c",
+        "android_client_info": {
+          "package_name": "safecar.cursoandroid.com.safecar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "448557458499-q9lq15rgiuvvsqjue2d88b3r7k2rf3v5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "safecar.cursoandroid.com.safecar",
+            "certificate_hash": "139e560704aa550ff7057b7fc89cff3ee1f11fa0"
+          }
+        },
+        {
+          "client_id": "448557458499-g4pr1o233teqe4p0n97cqt9ivp815878.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDK7sFHyoAvXS0U3BP_e_bJT0srbglyq-4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "448557458499-g4pr1o233teqe4p0n97cqt9ivp815878.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
