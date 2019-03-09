@@ -2,30 +2,67 @@ package safecar.cursoandroid.com.safecar.model;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
+import java.io.Serializable;
 
 import safecar.cursoandroid.com.safecar.config.ConfiguracaoFirebase;
 
-public class Usuario {
+public class Usuario implements Serializable {
 
     private String id;
     private String nome;
-    private String data;
+    private String cpf;
     private String email;
     private String senha;
-    private String cpf;
     private String Telefone;
-    private String Tipo;
+    private String tipo;
+    private String motorista;
+    private String passageiro;
 
     private String latitude;
     private String longitude;
-
 
     public Usuario() {
     }
 
     public void salvar(){
-        DatabaseReference referenciaFirebase = ConfiguracaoFirebase.getFirebase();
-        referenciaFirebase.child("usuarios").child(getId()).setValue(this);
+
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseDatabase();
+        DatabaseReference usuarios = firebaseRef.child( "usuarios" ).child( getId() );
+
+        usuarios.setValue(this);
+
+    }
+
+    public String getMotorista() {
+        return motorista;
+    }
+
+    public void setMotorista(String motorista) {
+        this.motorista = motorista;
+    }
+
+    public String getPassageiro() {
+        return passageiro;
+    }
+
+    public void setPassageiro(String passageiro) {
+        this.passageiro = passageiro;
+    }
+
+    public String getTelefone() {
+        return Telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        Telefone = telefone;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public String getLatitude() {
@@ -44,7 +81,6 @@ public class Usuario {
         this.longitude = longitude;
     }
 
-
     public String getId() {
         return id;
     }
@@ -61,14 +97,6 @@ public class Usuario {
         this.nome = nome;
     }
 
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -76,6 +104,7 @@ public class Usuario {
     public void setEmail(String email) {
         this.email = email;
     }
+
     @Exclude
     public String getSenha() {
         return senha;
@@ -85,28 +114,11 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getTelefone() {
-        return Telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        Telefone = telefone;
-    }
-
     public String getTipo() {
-        return Tipo;
+        return tipo;
     }
 
     public void setTipo(String tipo) {
-        Tipo = tipo;
+        this.tipo = tipo;
     }
 }
-

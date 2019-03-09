@@ -1,15 +1,12 @@
 package safecar.cursoandroid.com.safecar;
 
-
-import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -24,59 +21,41 @@ import safecar.cursoandroid.com.safecar.model.Usuario;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private TextView irParaCadastroLogin;
-    private EditText emailLogar;
-    private EditText senhaLogar;
+    private TextInputEditText campoEmail, campoSenha;
     private FirebaseAuth autenticacao;
-    private Button botaoLogar;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        getSupportActionBar().hide();
+        getSupportActionBar().setTitle("Entrar com uma conta");
 
-        irParaCadastroLogin = findViewById(R.id.irParaCadastroLoginId);
-        emailLogar = findViewById(R.id.emailLogarId);
-        senhaLogar = findViewById(R.id.senhaLogarId);
-        botaoLogar = findViewById(R.id.btnLogarId);
+        //Inicializar componentes
+        campoEmail = findViewById(R.id.editLoginEmail);
+        campoSenha = findViewById(R.id.editLoginSenha);
+    }
 
-        verificarUsuarioLogado();
+    public void validarLoginUsuario(View view){
 
-        irParaCadastroLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, CadastroFotoeCpfActivity.class);
-                startActivity(intent);
+        String textoEmail = campoEmail.getText().toString();
+        String textoSenha = campoSenha.getText().toString();
+
+        if(!textoEmail.isEmpty()){//verifica e-mail
+            if(!textoSenha.isEmpty()){//verifica senha
+
+                Usuario usuario = new Usuario();
+                usuario.setEmail( textoEmail );
+                usuario.setSenha( textoSenha );
+
+                logarUsuario( usuario );
+
+            }else{
+                Toast.makeText(LoginActivity.this, "Preencha a senha", Toast.LENGTH_SHORT).show();
             }
-        });
-
-        botaoLogar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String textoEmail = emailLogar.getText().toString();
-                String textoSenha = senhaLogar.getText().toString();
-
-                if(!textoEmail.isEmpty()){//verifica e-mail
-                    if(!textoSenha.isEmpty()){//verifica senha
-
-                        Usuario usuario = new Usuario();
-                        usuario.setEmail( textoEmail );
-                        usuario.setSenha( textoSenha );
-
-                        logarUsuario( usuario );
-
-                    }else{
-                        Toast.makeText(LoginActivity.this, "Preencha a senha", Toast.LENGTH_SHORT).show();
-                    }
-                }else{
-                    Toast.makeText(LoginActivity.this, "Preencha o e-mail", Toast.LENGTH_SHORT).show();
-                }
-           }
-
-        });
+        }else{
+            Toast.makeText(LoginActivity.this, "Preencha o e-mail", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void logarUsuario(Usuario usuario){
@@ -102,11 +81,11 @@ public class LoginActivity extends AppCompatActivity {
                     }catch ( FirebaseAuthWeakPasswordException e){
                         excecao = "Digite uma senha mais forte!";
                     }catch ( FirebaseAuthInvalidCredentialsException e){
-                        excecao= "Por favor, digite um e-mail válido";
+                        excecao= "Por favor, digite um e-mail vÃ¡lido";
                     }catch ( FirebaseAuthUserCollisionException e){
-                        excecao = "Este conta já foi cadastrada";
+                        excecao = "Este conta jÃ¡ foi cadastrada";
                     }catch (Exception e){
-                        excecao = "Erro ao cadastrar usuário: "  + e.getMessage();
+                        excecao = "Erro ao cadastrar usuÃ¡rio: "  + e.getMessage();
                         e.printStackTrace();
                     }
 
@@ -118,33 +97,4 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
-    /*private void verificarUsuarioLogado(){
-
-        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-        if(autenticacao.getCurrentUser() != null){
-            abrirTelaPrincipal();
-        }
-
-    }*/
-
-        private void verificarUsuarioLogado(){
-
-            autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-
-            if(UsuarioFirebase.getUsuarioAtual() != null){
-                UsuarioFirebase.redirecionaUsuarioLogado(LoginActivity.this);
-            }
-
-        }
-
-    private void abrirTelaPrincipal(){
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
-
 }

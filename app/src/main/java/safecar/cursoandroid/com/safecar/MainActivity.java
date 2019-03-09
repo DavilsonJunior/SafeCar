@@ -1,110 +1,96 @@
 package safecar.cursoandroid.com.safecar;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseAuth;
+
 import safecar.cursoandroid.com.safecar.config.ConfiguracaoFirebase;
+import safecar.cursoandroid.com.safecar.helper.Permissoes;
+import safecar.cursoandroid.com.safecar.helper.UsuarioFirebase;
 
 public class MainActivity extends AppCompatActivity {
 
-    //Atributos
-    private Toolbar toolbarTelaPrincipal;
     private FirebaseAuth autenticacao;
-    private TextView buscarOfertasCaronas, ofertasCaronas, caronasPendentes;
+    private String[] permissoes = new String[]{
+            Manifest.permission.ACCESS_FINE_LOCATION
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Buscando os Ids
-        buscarOfertasCaronas = findViewById(R.id.buscarOfertasCaronasId);
-        ofertasCaronas = findViewById(R.id.oferecerCaronasId);
-        caronasPendentes = findViewById(R.id.caronasPendentesId);
+        getSupportActionBar().hide();
 
-       /* buscarOfertasCaronas.setOnClickListener(new View.OnClickListener() {
+        Permissoes.validarPermissoes(permissoes, this, 1);
+
+        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        autenticacao.signOut();
+
+        /*autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        //autenticacao.signOut();
+        verificarUsuarioLogado();*/
+
+    }
+
+    public void abrirTelaLogin(View view){
+        startActivity(new Intent(this, LoginActivity.class ));
+    }
+
+    public void abrirTelaCadastro(View view){
+        Intent i = new Intent(this, VoltandoParaCadastroFotoActivity.class);
+        startActivity(i);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        UsuarioFirebase.redirecionaUsuarioLogado(MainActivity.this);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        for(int permissaoResultado: grantResults){
+            if(permissaoResultado == PackageManager.PERMISSION_DENIED){
+                alertaValidacaoPermissao();
+            }
+        }
+    }
+
+    private void alertaValidacaoPermissao(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Permissoes Negadas");
+        builder.setMessage("Para utilizar o app é necessario aceitar as permissoes");
+        builder.setCancelable(false);
+        builder.setPositiveButton("COnfirmar", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                abrirBuscarCaronaActivity();
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
             }
         });
 
-        ofertasCaronas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                abrirOfertasCaronasActivity();
-            }
-        });*/
-
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
-    //Adicionando Menu ao Layout
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater infrater = getMenuInflater();
-        infrater.inflate(R.menu.menu, menu);
-        return true;
-    }
+    private void verificarUsuarioLogado(){
 
-    //AcÃ£o do Menu
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.item1:
-                Toast.makeText(this, "Calma! ainda estou programando.", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.item2:
-                Toast.makeText(this, "Atualizando...", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.item3:
-                Toast.makeText(this, "deslogando...", Toast.LENGTH_SHORT).show();
-                autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-                autenticacao.signOut();
-                finish();
-                voltarParaLogin();
-
-                return true;
-
-            case R.id.item_seguranca:
-                abrirSegurancaCadastro();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        if(UsuarioFirebase.getUsuarioAtual() != null){
+            UsuarioFirebase.redirecionaUsuarioLogado(this);
         }
 
     }
 
-    private void voltarParaLogin(){
-        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-        startActivity(intent);
-    }
 
-    private void abrirSegurancaCadastro(){
-        Intent intent = new Intent(this, SegurancaCadastroActivity.class);
-        startActivity(intent);
-    }
-
-    /*private void abrirBuscarCaronaActivity(){
-        Intent intent = new Intent(this, BuscarCaronaActivity.class);
-        startActivity(intent);
-    }
-
-    private void abrirOfertasCaronasActivity(){
-        Intent intent = new Intent(this, OferecerCaronaActivity.class);
-        startActivity(intent);
-    }*/
 }

@@ -36,6 +36,8 @@ public class TelefoneActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_telefone);
 
+        getSupportActionBar().setTitle("Cadastrando Usuário");
+
         Permissao.validaPermissoes(1,this, permissoesNecessarias);
 
         btnContinuarTelefone = findViewById(R.id.botao_telefone_continuarId);
@@ -64,7 +66,7 @@ public class TelefoneActivity extends AppCompatActivity {
                 String token = String.valueOf(numeroRandomico);
                 String mensagemEnvio = "SafeCar codigo de confirmacao: " + token;
 
-                //Salvar os dados para validaÃ§Ã£o
+                //Salvar os dados para validaÃƒÂ§ÃƒÂ£o
                 Preferencias preferencias = new Preferencias(TelefoneActivity.this);
                 preferencias.salvarUsuarioPreferencias(telefoneNoFormatacao, token);
 
@@ -130,8 +132,8 @@ public class TelefoneActivity extends AppCompatActivity {
     private void alertaValidacaoPermissao(){
 
         AlertDialog.Builder builder = new AlertDialog.Builder( this );
-        builder.setTitle("PermissÃµes negadas");
-        builder.setMessage("Para utilizar esse app, NÃ£o Ã© necessario aceitar as permissÃµes");
+        builder.setTitle("PermissÃƒÂµes negadas");
+        builder.setMessage("Para utilizar esse app, NÃƒÂ£o ÃƒÂ© necessario aceitar as permissÃƒÂµes");
 
         builder.setPositiveButton("CONFIRMAR", new DialogInterface.OnClickListener() {
             @Override

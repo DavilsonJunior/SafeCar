@@ -9,6 +9,6 @@ xmls:xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity
     <item android:id="@+id/item_seguranca" android:title="Seguranca"
         app:showAsAction="ifRoom"
         android:orderInCategory="300"
-        android:icon="@drawable/icon_seguranca"/>
+        android:icon="@drawable/ic_person_add_white_24dp"/>
 
 </menu>

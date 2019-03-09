@@ -24,6 +24,8 @@ public class ValidacaoTelefoneActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_validacao_telefone);
 
+        getSupportActionBar().setTitle("Cadastrando Usuário");
+
         codigoValidar = findViewById(R.id.telefoneValidarId);
         botaoValidar = findViewById(R.id.botao_validar_continuvaarId);
 
@@ -47,11 +49,12 @@ public class ValidacaoTelefoneActivity extends AppCompatActivity {
 
                 if(tokenDigitado.equals(tokenGerado)){
                     Toast.makeText(ValidacaoTelefoneActivity.this, "Token Validado", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(ValidacaoTelefoneActivity.this, CadastroLoginActivity.class);
+                    Intent intent = new Intent(ValidacaoTelefoneActivity.this, CadastroActivity.class);
                     startActivity(intent);
+                    finish();
                 }
                 else{
-                    Toast.makeText(ValidacaoTelefoneActivity.this, "Token nÃ£o Validado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ValidacaoTelefoneActivity.this, "Token não Validado", Toast.LENGTH_SHORT).show();
                 }
 
             }

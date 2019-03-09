@@ -24,13 +24,15 @@ public class CadastroFotoeCpfActivity extends AppCompatActivity {
     private Button cpfContinuar;
     private Usuario usuario;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_fotoe_cpf);
 
+        getSupportActionBar().setTitle("Cadastrando Usuário");
+
         habilitacao = findViewById(R.id.inserirHabilitacaoId);
+
         String[] tipo = {"Tipo: A/B", "Tipo: A", "Tipo: C", "Tipo: D", "Tipo: E"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_dropdown_item,
@@ -47,6 +49,7 @@ public class CadastroFotoeCpfActivity extends AppCompatActivity {
 
         cpf.addTextChangedListener( maskCPf );
 
+
         cpfContinuar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,6 +65,7 @@ public class CadastroFotoeCpfActivity extends AppCompatActivity {
                 }
                 else{
                     abrirTelaTelefone();
+                    finish();
                 }
             }
         });
@@ -70,7 +74,7 @@ public class CadastroFotoeCpfActivity extends AppCompatActivity {
 
     private void abrirTelaTelefone(){
 
-        Intent i = new Intent(CadastroFotoeCpfActivity.this, TelefoneActivity.class);
+        Intent i = new Intent(CadastroFotoeCpfActivity.this, Telefone2Activity.class);
         startActivity(i);
     }
 }

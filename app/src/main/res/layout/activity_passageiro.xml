@@ -65,6 +65,7 @@
 
     </LinearLayout>
 
+
     <Button
         android:id="@+id/buttonChamarUber"
         android:layout_width="match_parent"
@@ -78,6 +79,15 @@
         android:text="Buscar Carona"
         android:textColor="@android:color/white"
         android:theme="@style/botaoPadrao" />
+
+    <ImageView
+        android:id="@+id/abrirSegurancaId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="66dp"
+        android:layout_marginLeft="16dp"
+        app:srcCompat="@drawable/icon_seguranca" />
 
 
 </android.support.design.widget.CoordinatorLayout>

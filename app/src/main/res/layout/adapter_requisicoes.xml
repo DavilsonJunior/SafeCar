@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:layout_margin="5dp">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:background="#CAFF70">
+    <TextView
+        android:id="@+id/textRequisicaoNome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Davilson Junior"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textRequisicaoDistancia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="0 Km - Aproximadamente"
+        android:textSize="12sp" />
+  </LinearLayout>
+
+      </LinearLayout>

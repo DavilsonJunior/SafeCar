@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -13,6 +15,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+
 import safecar.cursoandroid.com.safecar.PassageiroActivity;
 import safecar.cursoandroid.com.safecar.RequisicoesActivity;
 import safecar.cursoandroid.com.safecar.config.ConfiguracaoFirebase;
@@ -37,8 +40,6 @@ public class UsuarioFirebase {
         return usuario;
 
     }
-
-
 
     public static boolean atualizarNomeUsuario(String nome){
 
@@ -69,34 +70,60 @@ public class UsuarioFirebase {
     public static void redirecionaUsuarioLogado(final Activity activity){
 
         FirebaseUser user = getUsuarioAtual();
-        if(user != null){
-
-            DatabaseReference usuariosRef = ConfiguracaoFirebase.getFirebase()
+        if(user != null ){
+            Log.d("resultado", "onDataChange: " + getIdentificadorUsuario());
+            DatabaseReference usuariosRef = ConfiguracaoFirebase.getFirebaseDatabase()
                     .child("usuarios")
-                    .child(getIdentificadorUsuario());
+                    .child( getIdentificadorUsuario() );
             usuariosRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                    Usuario usuario = dataSnapshot.getValue(Usuario.class);
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Log.d("resultado", "onDataChange: " + dataSnapshot.toString() );
+                    Usuario usuario = dataSnapshot.getValue( Usuario.class );
 
                     String tipoUsuario = usuario.getTipo();
-                    if(tipoUsuario.equals("M")){
-                        activity.startActivity(new Intent(activity, RequisicoesActivity.class));
-                    }else{
-                        activity.startActivity(new Intent(activity, PassageiroActivity.class));
+                    if( tipoUsuario.equals("M") ){
+                        Intent i = new Intent(activity, RequisicoesActivity.class);
+                        activity.startActivity(i);
+                    }else {
+                        Intent i = new Intent(activity, PassageiroActivity.class);
+                        activity.startActivity(i);
                     }
+
                 }
 
                 @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+                public void onCancelled(DatabaseError databaseError) {
 
                 }
             });
-
-
         }
 
+    }
+
+    public static void atualizarDadosLocalizacao(double lat, double lon){
+
+        //Define nÃƒÂ³ de local de usuÃƒÂ¡rio
+        DatabaseReference localUsuario = ConfiguracaoFirebase.getFirebaseDatabase()
+                .child("local_usuario");
+        GeoFire geoFire = new GeoFire(localUsuario);
+
+        //Recupera dados usuÃƒÂ¡rio logado
+        Usuario usuarioLogado = UsuarioFirebase.getDadosUsuarioLogado();
+
+        //Configura localizaÃƒÂ§ÃƒÂ£o do usuÃƒÂ¡rio
+        geoFire.setLocation(
+                usuarioLogado.getId(),
+                new GeoLocation(lat, lon),
+                new GeoFire.CompletionListener() {
+                    @Override
+                    public void onComplete(String key, DatabaseError error) {
+                        if( error != null ){
+                            Log.d("Erro", "Erro ao salvar local!");
+                        }
+                    }
+                }
+        );
 
     }
 
@@ -105,4 +132,3 @@ public class UsuarioFirebase {
     }
 
 }
-

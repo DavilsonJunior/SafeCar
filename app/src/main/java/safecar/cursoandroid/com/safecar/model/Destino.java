@@ -1,5 +1,4 @@
 package safecar.cursoandroid.com.safecar.model;
-
 public class Destino {
 
     private String rua;

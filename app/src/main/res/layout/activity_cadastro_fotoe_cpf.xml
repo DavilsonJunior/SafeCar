@@ -35,16 +35,16 @@
 
 
             <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="140dp"
-                android:layout_height="140dp"
+                android:id="@+id/abrirGaleriaId"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
                 android:layout_marginTop="30dp"
                 app:srcCompat="@drawable/icon_ju" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Davilson Jr"
+                android:text="Davilson Junior"
                 android:textSize="18dp"
                 android:textColor="#1c1c1c"/>
 
@@ -56,38 +56,11 @@
             android:orientation="vertical"
             android:layout_marginTop="15dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Insira Documento RG"
-                android:layout_gravity="center_horizontal"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_weight="3"
-                    android:layout_height="wrap_content"
-                    android:hint="*.jpg, *.bmp, *.png"
-                    android:layout_marginLeft="80dp"
-                    android:textColorHint="#a5a5a5"
-                    android:inputType="textPersonName"
-                    android:layout_gravity="center_horizontal"/>
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_clips_24dp"
-                    android:scaleType="fitCenter"
-                    android:layout_marginRight="40dp"/>
-
-            </LinearLayout>
-
+            <ImageView
+                android:layout_width="250dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_inserir_documento"/>
 
         </LinearLayout>
 
